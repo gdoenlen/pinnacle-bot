@@ -5,17 +5,9 @@ import java.util.Collection;
 
 import jakarta.annotation.Nullable;
 
-import io.ebean.DB;
-import io.ebean.Database;
-import io.ebean.Query;
-
-public abstract class Repository<T extends Model> {
-    protected final Class<T> clazz;
-    protected final Database database;
-
+public abstract class Repository<T extends Model> extends ReadOnlyRepository<T> {
     protected Repository(Class<T> clazz) {
-        this.clazz = clazz;
-        this.database = DB.getDefault();
+        super(clazz);
     }
 
     /**
@@ -29,10 +21,6 @@ public abstract class Repository<T extends Model> {
             .where()
             .idEq(id)
             .findOne();
-    }
-
-    protected Query<T> query() {
-        return this.database.createQuery(this.clazz);
     }
 
     public void insert(Collection<T> entities) {

@@ -3,6 +3,7 @@ package com.github.gdoenlen.pinnacle.bot.core.cookies;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 
 import com.github.gdoenlen.pinnacle.bot.core.Model;
@@ -14,10 +15,12 @@ public class Cookie extends Model {
     @NotNull
     @IsAllowedToGiveCookies
     @Column(nullable = false)
+    @ManyToOne
     private User from;
 
     @NotNull
     @Column(nullable = false)
+    @ManyToOne
     private User to;
 
     private String reason;

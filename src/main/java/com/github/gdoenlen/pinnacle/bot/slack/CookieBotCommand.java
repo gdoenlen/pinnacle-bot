@@ -3,6 +3,7 @@ package com.github.gdoenlen.pinnacle.bot.slack;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolationException;
 
 import com.github.gdoenlen.pinnacle.bot.core.Context;
 import com.github.gdoenlen.pinnacle.bot.core.cookies.Cookie;
@@ -13,6 +14,8 @@ import com.github.gdoenlen.pinnacle.bot.core.users.UserFacade;
 import com.slack.api.bolt.context.builtin.SlashCommandContext;
 import com.slack.api.bolt.request.builtin.SlashCommandRequest;
 import com.slack.api.bolt.response.Response;
+
+import static com.github.gdoenlen.pinnacle.bot.slack.ResponseType.IN_CHANNEL;
 
 @ApplicationScoped
 class CookieBotCommand implements BotCommand {
@@ -34,17 +37,17 @@ class CookieBotCommand implements BotCommand {
     @Override
     public Response apply(SlashCommandRequest request, SlashCommandContext context) {
         User currentUser = Context.get().user();
-        if (currentUser.isAllowedToGiveCookies()) {
-            var cookie = new Cookie();
-            cookie.setFrom(currentUser);
-            cookie.setTo(null); // todo
-            cookie.setReason("todo");
+        var cookie = new Cookie();
+        cookie.setFrom(currentUser);
+        cookie.setTo(null); // todo find from the request?
+        cookie.setReason("todo");
 
+        try {
             this.cookieFacade.insert(cookie);
-
-            return context.ack("TODO!");
+        } catch (ConstraintViolationException ex) {
+            // todo
         }
 
-        return context.ack("TODO!");
+        return context.ack(res -> res.responseType(IN_CHANNEL).text("todo!"));
     }
 }

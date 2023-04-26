@@ -5,11 +5,11 @@ import io.ebean.DB;
 import io.ebean.Database;
 import io.ebean.Query;
 
-public abstract class Repository<T> {
+public abstract class ReadOnlyRepository<T> {
     protected final Class<T> clazz;
     protected final Database database;
 
-    protected Repository(Class<T> clazz) {
+    protected ReadOnlyRepository(Class<T> clazz) {
         this.clazz = clazz;
         this.database = DB.getDefault();
     }

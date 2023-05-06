@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 package com.github.gdoenlen.pinnacle.bot.core.cookies.analytics;
 
 import java.util.Collection;

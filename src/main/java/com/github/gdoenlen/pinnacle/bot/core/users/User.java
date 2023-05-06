@@ -12,14 +12,26 @@ import jakarta.validation.constraints.NotNull;
 
 import com.github.gdoenlen.pinnacle.bot.core.Model;
 
+import io.ebean.annotation.Formula;
+
 @Entity
 @Table(name = "users")
 public class User extends Model {
 
     @NotNull
     @Column(unique = true, nullable = false)
-    private String username;
+    private final String username;
 
+    @Formula(
+        select = "lgt.lastGivenCookieTimestamp",
+        join = """
+               join (
+                 select MAX(createdAt) as lastGivenCookieTimestamp, from_id
+                 from cookie group by from_id
+               ) as lgt
+               on cookie.from_id = ${ta}.id
+               """
+    )
     private Instant lastGivenCookieTimestamp;
 
     public User(String username) {

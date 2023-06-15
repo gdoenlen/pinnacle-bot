@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="cookie" identityType="identity" pkName="pk_cookie">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="from_id" type="bigint" notnull="true" references="users.id" foreignKeyName="fk_cookie_from_id" foreignKeyIndex="ix_cookie_from_id"/>
+            <column name="to_id" type="bigint" notnull="true" references="users.id" foreignKeyName="fk_cookie_to_id" foreignKeyIndex="ix_cookie_to_id"/>
+            <column name="reason" type="varchar"/>
+            <column name="created_at" type="timestamp" notnull="true"/>
+            <column name="last_modified_at" type="timestamp" notnull="true"/>
+            <column name="created_by_id" type="bigint" references="users.id" foreignKeyName="fk_cookie_created_by_id" foreignKeyIndex="ix_cookie_created_by_id"/>
+            <column name="last_modified_by_id" type="bigint" references="users.id" foreignKeyName="fk_cookie_last_modified_by_id" foreignKeyIndex="ix_cookie_last_modified_by_id"/>
+        </createTable>
+        <createTable name="users" identityType="identity" pkName="pk_users">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="username" type="varchar" notnull="true" unique="uq_users_username"/>
+            <column name="created_at" type="timestamp" notnull="true"/>
+            <column name="last_modified_at" type="timestamp" notnull="true"/>
+            <column name="created_by_id" type="bigint" references="users.id" foreignKeyName="fk_users_created_by_id" foreignKeyIndex="ix_users_created_by_id"/>
+            <column name="last_modified_by_id" type="bigint" references="users.id" foreignKeyName="fk_users_last_modified_by_id" foreignKeyIndex="ix_users_last_modified_by_id"/>
+        </createTable>
+    </changeSet>
+</migration>

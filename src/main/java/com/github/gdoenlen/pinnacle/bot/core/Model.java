@@ -6,6 +6,7 @@ import java.time.Instant;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import com.github.gdoenlen.pinnacle.bot.core.users.User;
@@ -28,9 +29,11 @@ public abstract class Model {
     protected Instant lastModifiedAt;
 
     @WhoCreated
+    @ManyToOne
     protected User createdBy;
 
     @WhoModified
+    @ManyToOne
     protected User lastModifiedBy;
 
     public Long getId() {

@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import com.github.gdoenlen.pinnacle.bot.core.Model;
 import com.github.gdoenlen.pinnacle.bot.core.users.User;
@@ -23,6 +24,7 @@ public class Cookie extends Model {
     @ManyToOne
     private User to;
 
+    @Size(max = 255)
     private String reason;
 
     public User getFrom() {

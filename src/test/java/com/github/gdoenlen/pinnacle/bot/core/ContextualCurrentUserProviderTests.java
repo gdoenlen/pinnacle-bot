@@ -15,7 +15,7 @@ class ContextualCurrentUserProviderTests {
 
         var provider = new ContextualCurrentUserProvider();
 
-        assertEquals(user.getId(), provider.currentUser());
+        assertEquals(user, provider.currentUser());
         Context.remove();
     }
 }

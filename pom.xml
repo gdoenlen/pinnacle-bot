@@ -12,6 +12,7 @@
   <properties>
     <maven.compiler.release>20</maven.compiler.release>
     <ebean.version>13.11.2</ebean.version>
+    <hibernate.validator.version>8.0.0.Final</hibernate.validator.version>
   </properties>
 
   <profiles>
@@ -23,6 +24,7 @@
       <properties>
         <exec.mainClass>com.github.gdoenlen.pinnacle.bot.Main</exec.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <smallrye.config.profile>dev</smallrye.config.profile>
       </properties>
     </profile>
     <profile>
@@ -138,7 +140,12 @@
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>8.0.0.Final</version>
+      <version>${hibernate.validator.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator-cdi</artifactId>
+      <version>${hibernate.validator.version}</version>
     </dependency>
     <!-- validator needs this to interpret error messages -->
     <dependency>

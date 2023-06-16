@@ -5,7 +5,7 @@ import com.github.gdoenlen.pinnacle.bot.core.users.User;
 
 import io.ebean.config.CurrentUserProvider;
 
-class ContextualCurrentUserProvider implements CurrentUserProvider {
+public class ContextualCurrentUserProvider implements CurrentUserProvider {
     @Override
     public User currentUser() {
         return Context.get().user();

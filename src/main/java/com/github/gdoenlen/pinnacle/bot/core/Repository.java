@@ -3,8 +3,6 @@ package com.github.gdoenlen.pinnacle.bot.core;
 
 import java.util.Collection;
 
-import jakarta.annotation.Nullable;
-
 public abstract class Repository<T extends Model> extends ReadOnlyRepository<T> {
     protected Repository(Class<T> clazz) {
         super(clazz);
@@ -15,7 +13,6 @@ public abstract class Repository<T extends Model> extends ReadOnlyRepository<T> 
      * @param id the id of the entity you want to find
      * @return the entity or null
      */
-    @Nullable
     public T findById(Long id) {
         return this.query()
             .where()

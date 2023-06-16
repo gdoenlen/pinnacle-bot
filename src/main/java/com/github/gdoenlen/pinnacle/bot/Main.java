@@ -7,12 +7,13 @@ import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 
 import io.smallrye.config.inject.ConfigExtension;
+import org.hibernate.validator.cdi.ValidationExtension;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         SeContainer container = SeContainerInitializer.newInstance()
             .disableDiscovery()
-            .addExtensions(new ConfigExtension())
+            .addExtensions(new ConfigExtension(), new ValidationExtension())
             .addPackages(true, Main.class)
             .initialize();
 

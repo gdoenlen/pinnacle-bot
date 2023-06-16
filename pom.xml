@@ -13,6 +13,7 @@
     <maven.compiler.release>20</maven.compiler.release>
     <ebean.version>13.11.2</ebean.version>
     <hibernate.validator.version>8.0.0.Final</hibernate.validator.version>
+    <addedModules>--add-modules=jdk.incubator.concurrent</addedModules>
   </properties>
 
   <profiles>
@@ -44,6 +45,7 @@
         <configuration>
           <compilerArgs>
             <arg>-Xlint:all</arg>
+            <arg>${addedModules}</arg>
           </compilerArgs>
           <annotationProcessorPaths>
             <path>
@@ -84,10 +86,16 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.2</version>
+        <configuration>
+          <argLine>${addedModules}</argLine>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>2.22.2</version>
+        <configuration>
+          <argLine>${addedModules}</argLine>
+        </configuration>
         <executions>
           <execution>
             <goals>

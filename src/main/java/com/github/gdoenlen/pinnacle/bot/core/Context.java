@@ -1,33 +1,29 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.github.gdoenlen.pinnacle.bot.core;
 
+import java.util.NoSuchElementException;
+import java.util.concurrent.Callable;
+import jdk.incubator.concurrent.ScopedValue;
+
 import com.github.gdoenlen.pinnacle.bot.core.users.User;
 
-/**
- * The application context.
- * The current implementation uses a thread local variable to hold the context
- * and so that other layers may access it easily. In the future, this should
- * probably be migrated to the ScopedValue implementation from JEP 429.
- *
- * @see <a href="https://openjdk.org/jeps/429">JEP 429<a>
- */
+/** The application context. This should always be set before any action is taken. */
 public record Context(User user) {
-    private static final ThreadLocal<Context> CURRENT = new ThreadLocal<>();
+    private static final ScopedValue<Context> CURRENT = ScopedValue.newInstance();
 
-    public static Context get() {
-        Context current = CURRENT.get();
-        if (current == null) {
-            throw new IllegalStateException("The application context was not set.");
+    public static <T> T call(Context context, Callable<T> fn) throws Exception {
+        return ScopedValue.where(CURRENT, context)
+            .call(fn);
+    }
+
+    public static Context current() {
+        try {
+            return CURRENT.get();
+        } catch (NoSuchElementException ex) {
+            throw new IllegalStateException(
+                "The application context was not set. You should run your action with: Context::call.",
+                ex
+            );
         }
-
-        return current;
-    }
-
-    public static void set(Context context) {
-        CURRENT.set(context);
-    }
-
-    public static void remove() {
-        CURRENT.remove();
     }
 }

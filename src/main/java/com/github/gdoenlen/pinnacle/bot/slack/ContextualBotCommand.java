@@ -8,6 +8,7 @@ import com.github.gdoenlen.pinnacle.bot.core.users.UserFacade;
 import com.slack.api.bolt.context.builtin.SlashCommandContext;
 import com.slack.api.bolt.request.builtin.SlashCommandRequest;
 import com.slack.api.bolt.response.Response;
+import jdk.incubator.concurrent.ScopedValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,18 +35,15 @@ class ContextualBotCommand implements BotCommand {
     @Override
     public Response apply(SlashCommandRequest request, SlashCommandContext context) {
         var currentUser = this.findCurrentUser(context);
-        Context.set(new Context(currentUser));
 
         try {
-            return this.delegate.apply(request, context);
+            return Context.call(new Context(currentUser), () -> this.delegate.apply(request, context));
         } catch (Exception ex) {
             LOGGER.error("Uncaught command exception.", ex);
 
             // The only sensible thing to do here is to acknowledge
             // the request or Slack will get angry.
             return context.ack();
-        } finally {
-            Context.remove();
         }
     }
 

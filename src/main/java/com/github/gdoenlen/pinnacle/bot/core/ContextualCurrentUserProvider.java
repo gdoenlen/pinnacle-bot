@@ -8,6 +8,6 @@ import io.ebean.config.CurrentUserProvider;
 public class ContextualCurrentUserProvider implements CurrentUserProvider {
     @Override
     public User currentUser() {
-        return Context.get().user();
+        return Context.current().user();
     }
 }

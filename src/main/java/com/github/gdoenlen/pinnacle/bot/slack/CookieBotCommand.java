@@ -36,7 +36,7 @@ class CookieBotCommand implements BotCommand {
 
     @Override
     public Response apply(SlashCommandRequest request, SlashCommandContext context) {
-        User currentUser = Context.get().user();
+        User currentUser = Context.current().user();
         var cookie = new Cookie();
         cookie.setFrom(currentUser);
         cookie.setTo(null); // todo find from the request?

@@ -44,17 +44,7 @@ class ContextualBotCommandTests {
             var command = new ContextualBotCommand(this.delegate, this.userFacade);
             command.apply(null, this.context);
 
-            context.verify(() -> Context.set(any()));
-        }
-    }
-
-    @Test
-    void it_should_always_remove_the_context_at_the_end() throws Exception {
-        try (MockedStatic<Context> context = mockStatic(Context.class)) {
-            var command = new ContextualBotCommand(this.delegate, this.userFacade);
-            command.apply(null, this.context);
-
-            context.verify(Context::remove);
+            context.verify(() -> Context.call(any(), any()));
         }
     }
 

@@ -8,7 +8,6 @@ import com.github.gdoenlen.pinnacle.bot.core.users.UserFacade;
 import com.slack.api.bolt.context.builtin.SlashCommandContext;
 import com.slack.api.bolt.request.builtin.SlashCommandRequest;
 import com.slack.api.bolt.response.Response;
-import jdk.incubator.concurrent.ScopedValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -11,8 +11,9 @@ name: Create and publish a Docker image
 
 on:
   push:
-    branches: ['dockerize']
-
+    branches: 
+      - '-release'
+      - dockerize
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}

@@ -46,14 +46,16 @@ class ContextualBotCommand implements BotCommand {
         }
     }
 
-    private User findCurrentUser(SlashCommandContext context) {
+    private User findCurrentUser(SlashCommandContext context)  {
         String username = context.getRequestUserId();
         User user = this.userFacade.findByUsername(username);
-        if (user == null) {
-            user = new User(username);
-            this.userFacade.insert(user);
+        if (user != null) {
+            return user;
         }
 
-        return user;
+        var newUser = new User(username);
+        Context.run(new Context(newUser), () -> this.userFacade.insert(newUser));
+
+        return newUser;
     }
 }

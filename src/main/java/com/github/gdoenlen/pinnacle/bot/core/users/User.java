@@ -26,10 +26,10 @@ public class User extends Model {
         select = "lgt.lastGivenCookieTimestamp",
         join = """
                join (
-                 select MAX(createdAt) as lastGivenCookieTimestamp, from_id
+                 select MAX(created_at) as lastGivenCookieTimestamp, from_id
                  from cookie group by from_id
                ) as lgt
-               on cookie.from_id = ${ta}.id
+               on lgt.from_id = ${ta}.id
                """
     )
     private Instant lastGivenCookieTimestamp;

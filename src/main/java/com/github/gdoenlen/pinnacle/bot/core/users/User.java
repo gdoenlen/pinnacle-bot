@@ -8,6 +8,7 @@ import java.time.ZoneId;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import jakarta.validation.constraints.NotNull;
 
 import com.github.gdoenlen.pinnacle.bot.core.Model;
@@ -25,7 +26,7 @@ public class User extends Model {
     @Formula(
         select = "lgt.lastGivenCookieTimestamp",
         join = """
-               join (
+               left join (
                  select MAX(created_at) as lastGivenCookieTimestamp, from_id
                  from cookie group by from_id
                ) as lgt

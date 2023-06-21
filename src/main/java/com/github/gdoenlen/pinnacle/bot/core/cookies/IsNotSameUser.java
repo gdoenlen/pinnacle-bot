@@ -21,7 +21,7 @@ import jakarta.validation.Payload;
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<IsAllowedToGiveCookies, Cookie> {
+    class Validator implements ConstraintValidator<IsNotSameUser, Cookie> {
         @Override
         public boolean isValid(Cookie cookie, ConstraintValidatorContext context) {
             User from = cookie.getFrom();

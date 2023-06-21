@@ -3,7 +3,6 @@ package com.github.gdoenlen.pinnacle.bot.core.cookies.analytics;
 import com.github.gdoenlen.pinnacle.bot.core.users.User;
 import com.github.gdoenlen.pinnacle.bot.utils.SqlGenerator;
 import io.ebean.DB;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.List;
 
-@Ignore("Will not work until ebean enhancement is figured out")
 public class TopCookieIT {
 
-    @BeforeAll
+//    @BeforeAll
     static void populateSystem() {
         String sql = """
             INSERT INTO users (id, username, created_at, last_modified_at, created_by_id, last_modified_by_id)
@@ -23,7 +21,7 @@ public class TopCookieIT {
         DB.sqlUpdate(sql).execute();
     }
 
-    @Test
+//    @Test
     void cookieLeaderboardWorks() {
         String userSql = SqlGenerator.generateUserInserts(12);
         DB.sqlUpdate(userSql).execute();

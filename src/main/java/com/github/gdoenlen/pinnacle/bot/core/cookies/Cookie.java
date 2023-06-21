@@ -11,6 +11,7 @@ import com.github.gdoenlen.pinnacle.bot.core.Model;
 import com.github.gdoenlen.pinnacle.bot.core.users.User;
 
 @Entity
+@IsNotSameUser
 public class Cookie extends Model {
 
     @NotNull

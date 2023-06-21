@@ -3,6 +3,7 @@ package com.github.gdoenlen.pinnacle.bot.core.users;
 
 import java.util.Set;
 
+import io.ebean.annotation.Transactional;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -23,6 +24,7 @@ public class UserFacade extends Facade<User> {
         this.repository = repository;
     }
 
+    @Transactional
     public void insert(User user) {
         this.validate(user);
         this.repository.insert(user);

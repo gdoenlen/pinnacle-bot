@@ -31,23 +31,25 @@ class TopBotCommand implements BotCommand {
     }
 
     @Override
-    public Response apply(SlashCommandRequest slashCommandRequest, SlashCommandContext context) {
+    public Response apply(
+        SlashCommandRequest slashCommandRequest,
+        SlashCommandContext context
+    ) throws SlackApiException, IOException {
         List<TopCookie> topCookieList = this.topCookieRepository.findTopTen();
         StringBuilder leaderboard = new StringBuilder();
-        leaderboard.append("Leaderboard:\n");
+        leaderboard.append("```Leaderboard:\n");
         for (int i = 0; i < topCookieList.size(); i++) {
             TopCookie topCookie = topCookieList.get(i);
-            leaderboard.append(i + 1).append(". ").append(topCookie.username())
-                .append(" (").append(topCookie.numCookies()).append(" cookies)\n");
+            leaderboard.append(i + 1)
+                .append(". ")
+                .append("@")
+                .append(ResponseUtils.getDisplayName(topCookie.username(), context))
+                .append(" (")
+                .append(topCookie.numCookies())
+                .append(" cookies)\n");
         }
-        try {
-            context.client().chatPostMessage(r -> r
-                .channel(context.getChannelId())
-                .text(leaderboard.toString()));
-        } catch (IOException | SlackApiException e) {
-            e.printStackTrace();
-        }
+        leaderboard.append("```");
 
-        return context.ack();
+        return ResponseUtils.inChannel(leaderboard.toString(), context);
     }
 }

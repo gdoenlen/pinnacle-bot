@@ -51,4 +51,8 @@ public class Cookie extends Model {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public String getFromUsername() {
+        return this.from.getUsername();
+    }
 }

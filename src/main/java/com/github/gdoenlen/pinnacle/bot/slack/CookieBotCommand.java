@@ -25,7 +25,6 @@ import static com.github.gdoenlen.pinnacle.bot.slack.ResponseType.IN_CHANNEL;
 
 @ApplicationScoped
 class CookieBotCommand implements BotCommand {
-    private final Pattern TARGET_USER_REGEX = Pattern.compile("<@(?<username>\\w*)|.*>");
     private final Pattern REASON_REGEX = Pattern.compile(">\\s*(?<reason>.*)");
     private final CookieFacade cookieFacade;
     private final UserFacade userFacade;
@@ -47,7 +46,7 @@ class CookieBotCommand implements BotCommand {
         var cookie = new Cookie();
         cookie.setFrom(currentUser);
 
-        User targetUser = findTargetUser(request, context);
+        User targetUser = findTargetUser(request);
         if (targetUser == null) {
             //TODO respond with user not found or something
             return context.ack();
@@ -85,18 +84,8 @@ class CookieBotCommand implements BotCommand {
         return reasonTextMatcher.group("reason");
     }
 
-    private User findTargetUser(SlashCommandRequest request, SlashCommandContext context) {
-        String requestText = request.getPayload().getText();
-        if (StringUtils.isBlank(requestText)) {
-            return null;
-        }
-
-        Matcher userMatcher = TARGET_USER_REGEX.matcher(requestText);
-        if (!userMatcher.find()) {
-            return null;
-        }
-
-        String userNameText = userMatcher.group("username");
+    private User findTargetUser(SlashCommandRequest request) {
+        String userNameText = RequestUtils.findMentionedUser(request);
         User existingUser = this.userFacade.findByUsername(userNameText);
         if (existingUser != null) {
             return existingUser;

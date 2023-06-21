@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.github.gdoenlen.pinnacle.bot.core.cookies;
 
+import java.util.Collection;
 import java.util.Set;
 
+import com.github.gdoenlen.pinnacle.bot.core.users.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -11,6 +13,8 @@ import jakarta.validation.Validator;
 
 import com.github.gdoenlen.pinnacle.bot.core.Facade;
 import com.github.gdoenlen.pinnacle.bot.core.Repository;
+
+import static java.util.Objects.requireNonNull;
 
 @ApplicationScoped
 public class CookieFacade extends Facade<Cookie> {
@@ -31,6 +35,10 @@ public class CookieFacade extends Facade<Cookie> {
         }
 
         this.repository.insert(cookie);
+    }
+
+    public Collection<Cookie> findByUser(User user) {
+        return this.repository.findByUser(requireNonNull(user));
     }
 
     @Override

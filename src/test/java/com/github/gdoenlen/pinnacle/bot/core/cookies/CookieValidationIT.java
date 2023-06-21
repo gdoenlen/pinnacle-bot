@@ -33,7 +33,7 @@ class CookieValidationIT {
         cookie.setTo(new User(USERNAME));
 
         Set<ConstraintViolation<Cookie>> violations = this.validator.validate(cookie);
-        assertEquals(violations.size(), 2);
+        assertEquals(3, violations.size());
     }
 
     @Test

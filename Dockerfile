@@ -6,9 +6,7 @@ ENV JAR_ARGS=""
 
 ENV SYS_PROPS="-Xmx256m --add-modules=jdk.incubator.concurrent"
 
-ENV slack.bot.token
-ENV slack.signing.secret
+EXPOSE 3000
 
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT java -jar ${SYS_PROPS} pinnacle-bot-1.0.jar ${JAR_ARGS}
 

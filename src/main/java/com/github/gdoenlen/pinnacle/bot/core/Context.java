@@ -12,8 +12,15 @@ public record Context(User user) {
     private static final ScopedValue<Context> CURRENT = ScopedValue.newInstance();
 
     public static <T> T call(Context context, Callable<T> fn) throws Exception {
-        return ScopedValue.where(CURRENT, context)
-            .call(fn);
+        return where(context).call(fn);
+    }
+
+    public static void run(Context context, Runnable r) {
+        where(context).run(r);
+    }
+
+    private static ScopedValue.Carrier where(Context context) {
+        return ScopedValue.where(CURRENT, context);
     }
 
     public static Context current() {

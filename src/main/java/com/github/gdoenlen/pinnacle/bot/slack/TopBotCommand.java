@@ -27,7 +27,7 @@ class TopBotCommand implements BotCommand {
 
     @Override
     public String name() {
-        return "top";
+        return "/top";
     }
 
     @Override

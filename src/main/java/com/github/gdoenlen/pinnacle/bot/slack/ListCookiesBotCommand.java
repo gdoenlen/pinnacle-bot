@@ -19,6 +19,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import static com.github.gdoenlen.pinnacle.bot.slack.ResponseUtils.getDisplayName;
+import static org.apache.commons.lang3.StringUtils.defaultString;
 
 @ApplicationScoped
 class ListCookiesBotCommand implements BotCommand {
@@ -70,7 +71,7 @@ class ListCookiesBotCommand implements BotCommand {
                 .append("@")
                 .append(getDisplayName(cookie.getFromUsername(), context))
                 .append(": ")
-                .append(cookie.getReason())
+                .append(defaultString(cookie.getReason()))
                 .append(" (")
                 .append(DATE_FORMATTER.format(cookie.getCreatedAt()))
                 .append(")")
